@@ -1,0 +1,311 @@
+---
+title: "Computing in R"
+subtitle: "AMC Graduate School"
+author: "Perry Moerland"
+date: "2019-01-24 (updated: `r Sys.Date()`)"
+output:
+  xaringan::moon_reader:
+    self_contained: TRUE
+    nature:
+      beforeInit: "macros.js"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(prompt=TRUE, comment='#',fig.path='Figures/')
+```
+
+background-image: url(https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/R_logo.svg/500px-R_logo.svg.png)
+background-size: cover
+
+???
+
+Image credit: [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Sharingan_triple.svg)
+
+---
+# Course setup
+
+- Course aim: become familiar with the basics of R
+
+- Two days, two sessions per day: 9:30-12:30 & 13:30-16:30
+
+- Mix of interactive lectures and computer exercises
+
+--
+  
+- [Course website](http://wiki.bioinformaticslaboratory.nl/foswiki/bin/view/BioLab/ComputinginR)
+
+.footnote[
+[1] http://wiki.bioinformaticslaboratory.nl/foswiki/bin/view/BioLab/ComputinginR
+]
+
+--
+
+- Comments and suggestions for improvement are most welcome
+
+
+---
+
+# Stages in statistical analysis
+
+1. <span style="color:red">Importing</span> data into statistical program
+
+1. <span style="color:red">Inspecting</span> data
+ 
+ - finding errors, cleaning
+   
+ - recoding and transforming
+   
+ - describing and summarizing data
+   
+ using spreadsheets, tables and graphics
+   
+1. <span style="color:red">Analyzing</span> data: estimation, uncertainty (confidence intervals, p-value), predictive value
+
+1.  <span style="color:red">Validating</span> model <br>
+    Check the assumptions of the model  
+    
+1. <span style="color:red">Reporting</span> of results <br>
+    summary, tables, graphics <br>
+    export
+
+---
+
+# R as a pocket calculator
+
+- First of all, R can be used as a pocket calculator
+
+- Many mathematical operations are pre-defined in R <br>
+
+```{r}
+2+7
+```
+
+--
+
+```{r}
+sqrt(2)
+```
+
+```{r}
+cos(pi)
+```
+
+```{r}
+log10(10^3)
+```
+---
+# Matrices
+
+.left-column[
+![:scale 80%](Figures/matrix.png)
+]
+
+.right-column[
+```{r matrix,fig.show='hide',prompt=FALSE}
+A <- matrix(data = 1:9, nrow = 3, ncol = 3)
+A[2,]
+A[,1]
+A[2,3]
+```
+]
+
+
+---
+# Constructing a data frame
+
+```{r dataframe}
+pclass <- c("1st","2nd","1st")
+survived <- c(1,1,0)
+name <- c("Elisabeth Walton","Hudson Trevor","Helen Loraine")
+age <- c(29.0,0.9167,2.0)
+titanic <- data.frame(pclass,survived,name,age)
+titanic
+```
+
+---
+
+# R plots
+
+```{r poly, fig.height=4, dev='svg'}
+par(mar = c(4, 4, 1, .1))
+x <- (0:100)/10
+plot(x, x^3 - 13 * x^2 + 39 * x)
+```
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot1,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot1", "png")`)
+]
+
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot2,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+{{points(2,34,col="red",pch=16,
+       cex=2)}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot2", "png")`)
+]
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot3,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+points(2,34,col="red",pch=16,
+       cex=2)
+{{arrows(4,50,2.2,34.5)}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot3", "png")`)
+]
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot4,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+points(2,34,col="red",pch=16,
+       cex=2)
+arrows(4,50,2.2,34.5)
+{{text(4.15,50,"local maximum",
+     adj=0,col="blue",cex=1.5)}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot4", "png")`)
+]
+
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot5,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+points(2,34,col="red",pch=16,
+       cex=2)
+arrows(4,50,2.2,34.5)
+text(4.15,50,"local maximum",
+     adj=0,col="blue",cex=1.5)
+{{lines(x,30-50*sin(x/2),
+      col="blue")}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot5", "png")`)
+]
+
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot6,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+points(2,34,col="red",pch=16,
+       cex=2)
+arrows(4,50,2.2,34.5)
+text(4.15,50,"local maximum",
+     adj=0,col="blue",cex=1.5)
+lines(x,30-50*sin(x/2),
+      col="blue")
+{{legend(x=0,y=80,
+       legend=c("Sahara",
+                "Gobi"),
+       lty=1,
+       col=c("black","blue"),
+       cex=1.5)
+}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot6", "png")`)
+]
+
+---
+
+# Interactive plots
+
+```{r plotly, fig.height=4, dev='svg', message=FALSE, warning=FALSE}
+library(plotly)
+dat = data.frame(x=(0:100)/10,y=x^3-13*x^2+39*x)
+plot_ly(data=dat,x=~x,y=~y)
+```
+
+---
+# Tables
+
+If you want to generate a table, make sure it is in .HTML format (instead of Markdown or other formats), e.g.,
+
+```{r}
+library(foreign)
+titanic3 <- read.dta("Exercises/titanic3.dta")
+knitr::kable(head(titanic3[,1:6],n=5), format = "html")
+```
+
+---
+# HTML Widgets
+
+```{r eval=require('DT'), tidy=FALSE}
+DT::datatable(
+  head(titanic3[,1:6],n=100),
+  fillContainer = FALSE, options = list(pageLength = 3)
+)
+```
+
+---
+class: center, middle
+
+# Thanks!
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
