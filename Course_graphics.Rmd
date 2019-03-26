@@ -1,0 +1,355 @@
+---
+title: "Computing in R: Day 2"
+subtitle: "AMC Graduate School"
+author: "Perry Moerland"
+date: "2019-03-26"
+output:
+  xaringan::moon_reader:
+    self_contained: TRUE
+    nature:
+      beforeInit: "macros.js"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE,echo=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(prompt=TRUE, comment='#',fig.path='Figures/')
+```
+
+# Graphics
+
+R has versatile tools for graphics. There are typically three steps to
+producing useful graphics:
+
+1. Creating the basic plot
+
+1. Enhancing the plot with labels, legends, colors etc.
+
+1. Exporting the plot from R for use elsewhere
+  
+---
+# Basic plot (I)
+
+It is straightforward to make a simple plot using functions from the
+__graphics__ package (loaded by default):
+
+```{r poly1, fig.height=3.5, dev='svg',echo=c(2,3)}
+par(mar = c(4, 4, .1, .1))
+x <- (0:100)/10
+plot(x, x^3 - 13 * x^2 + 39 * x)
+```
+---
+# Basic plot (II)
+You can increase the size of the symbols on the axes and the axis labels (_cex_ stands for character expansion factor):
+
+```{r poly2, fig.height=3.5, dev='svg',echo=2}
+par(mar = c(4, 5, .1, .1))
+plot(x, x^3 - 13 * x^2 + 39 * x,cex.axis=1.3,cex.lab=1.5)
+```
+
+---
+# Basic plot (III)
+
+Change the type of plot via the argument _type_: "p" for points (is default), "l" for lines, etc. See [?plot](https://www.rdocumentation.org/packages/graphics/versions/3.5.1/topics/plot) for other options
+
+```{r poly3, fig.height=3.5, dev='svg',echo=2}
+par(mar = c(4, 5, .1, .1))
+plot(x,x^3-13*x^2+39*x,type="l",cex.axis=1.3,cex.lab=1.5)
+```
+
+---
+# Basic plot (IV)
+
+- Change the titles for the axes via _xlab_ and _ylab_
+- Add an overall title for the plot via _main_
+
+```{r poly4, fig.height=3.5, dev='svg',echo=2}
+par(mar = c(4, 5, 2, .1))
+plot(x,x^3-13*x^2+39*x,type="l",xlab="time (hours)",
+     ylab="temperature",main="Enhanced plot",cex.axis=1.3,
+     cex.lab=1.5)
+```
+---
+# Basic plot (V)
+- Change the plot symbol used from the default dot using the argument _pch_ (see [reference card](http://wiki.bioinformaticslaboratory.nl/twikidata/pub/Education/ComputinginR_new/R-refcard-v2.pdf))
+- Change the colour via the argument _col_. By name: see `colors()` for the 657 [options](http://research.stowers.org/mcm/efg/R/Color/Chart/). By number: see `palette()`
+
+```{r poly5, fig.height=3, dev='svg',echo=2}
+par(mar = c(4, 5, 2, .1))
+plot(x,x^3-13*x^2+39*x,pch=18,xlab="time (hours)",
+     ylab="temperature",col="red",main="Enhanced plot",
+     cex.axis=1.3,cex.lab=1.5)
+```
+
+---
+# Plot symbols
+
+There are 25 different plot symbols, see [?points](https://www.rdocumentation.org/packages/graphics/versions/3.5.1/topics/points)
+
+```{r pch, fig.height=4, dev='svg', fig.show='hold'}
+plot(1:25, pch=1:25,cex=2,bg="grey")
+# bg: background colors for open plot symbols
+```
+
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot1,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot1", "png")`)
+]
+
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot2,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+{{points(2,34,col="red",pch=16,
+       cex=2)}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot2", "png")`)
+]
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot3,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+points(2,34,col="red",pch=16,
+       cex=2)
+{{arrows(4,50,2.2,34.5)}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot3", "png")`)
+]
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot4,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+points(2,34,col="red",pch=16,
+       cex=2)
+arrows(4,50,2.2,34.5)
+{{text(4.15,50,"local maximum",
+     adj=0,col="blue",cex=1.5)}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot4", "png")`)
+]
+
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot5,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+points(2,34,col="red",pch=16,
+       cex=2)
+arrows(4,50,2.2,34.5)
+text(4.15,50,"local maximum",
+     adj=0,col="blue",cex=1.5)
+{{lines(x,30-50*sin(x/2),
+      col="blue")}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot5", "png")`)
+]
+
+---
+# Enhancing a plot
+
+.pull-left[
+```{r stepwise-plot6,fig.show='hide',prompt=FALSE}
+x<-(0:100)/10
+plot(x,x^3-13*x^2+39*x,
+     type="l",
+     xlab="time (hours)",
+     ylab="temperature",
+     cex.axis=1.5,cex.lab=1.5)
+points(2,34,col="red",pch=16,
+       cex=2)
+arrows(4,50,2.2,34.5)
+text(4.15,50,"local maximum",
+     adj=0,col="blue",cex=1.5)
+lines(x,30-50*sin(x/2),
+      col="blue")
+{{legend(x=0,y=80,
+       legend=c("Sahara",
+                "Gobi"),
+       lty=1,
+       col=c("black","blue"),
+       cex=1.5)
+}}
+```
+]
+
+.pull-right[
+![](`r knitr::fig_chunk("stepwise-plot6", "png")`)
+]
+
+---
+# Graphical parameters (I)
+
+You can change the default value of many graphical parameters via _par_ (see [?par](https://www.rdocumentation.org/packages/graphics/versions/3.5.1/topics/par)). For example to reset the background of a plot to
+green:
+```{r par1}
+par("bg")
+```
+
+--
+
+```{r par2}
+par(bg="green")
+par("bg")
+```
+
+---
+# Graphical parameters (II)
+Any plot that you'll make from now on will have a green background:
+
+```{r par3, fig.height=4, dev='svg', message=FALSE, warning=FALSE,echo=2}
+par(bg="green")
+plot(x, x^3 - 13 * x^2 + 39 * x)
+```
+
+---
+# Graphical parameters (III)
+
+But luckily you can switch back:
+
+```{r par4, fig.height=4, dev='svg', message=FALSE, warning=FALSE}
+par(bg="white")
+plot(x, x^3 - 13 * x^2 + 39 * x)
+```
+
+---
+# Graphical parameters: saving defaults
+
+```{r par5, fig.height=4, dev='svg', message=FALSE, warning=FALSE}
+par.defaults <- par(no.readonly=TRUE)
+par(bg="green")
+par(par.defaults)
+plot(x, x^3 - 13 * x^2 + 39 * x)
+```
+---
+# Graphical parameters (IV)
+
+Other often used parameters/arguments:
+- _lwd_ sets the line width
+- _las_ to rotate axis symbols
+- _mfrow_ and _mfcol_ enable multiple plots in one figure
+- _mar_ to change the default margins of the figure
+
+```{r par6, fig.height=3, dev='svg', message=FALSE, warning=FALSE,echo=2}
+par(mar = c(4, 5, .1, .1))
+plot(x,x^3-13*x^2+39*x,type="l",xlab= "time (hours)",
+     ylab="temperature",lwd=3,las=1,cex.axis=1.3,cex.lab=1.5)
+```
+
+---
+# Histogram
+
+Use `hist` for plotting histograms. See [?hist](https://www.rdocumentation.org/packages/graphics/versions/3.5.1/topics/hist) for the many arguments of this function.
+
+```{r hist,fig.height=4,echo=3}
+library(foreign)
+titanic3 <- read.dta("../Exercises/titanic3.dta")
+hist(titanic3$age,breaks=15,freq=FALSE,cex.axis=1.5,cex.lab=1.5)
+```
+
+---
+# Boxplot (I)
+
+.pull-left[
+The function `boxplot` can be used on a vector:
+```{r boxplot1,fig.show='hide',fig.height=5,prompt=FALSE}
+boxplot(titanic3$fare,
+        ylim=c(0,300),
+        ylab="fare", 
+        cex.axis=1.5,
+        cex.lab=1.5
+        )
+```
+]
+.pull-right[
+![](`r knitr::fig_chunk("boxplot1", "png")`)
+]
+
+---
+# Boxplot (II)
+
+.pull-left[
+Or using the formula interface (with ~):
+```{r boxplot2,fig.show='hide',fig.height=5,prompt=FALSE}
+boxplot(fare~pclass,
+        data=titanic3,
+        ylim=c(0,300),
+        ylab="fare", 
+        cex.axis=1.5,
+        cex.lab=1.5
+        )
+```
+]
+.pull-right[
+![](`r knitr::fig_chunk("boxplot2", "png")`)
+]
+
+
+---
+# Interactive plots
+
+```{r plotly, fig.height=4, dev='svg', message=FALSE, warning=FALSE}
+library(plotly)
+dat = data.frame(x=(0:100)/10,y=x^3-13*x^2+39*x)
+plot_ly(data=dat,x=~x,y=~y)
+```
+
+---
+class: center, middle
+
+# Thanks!
+
+Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
