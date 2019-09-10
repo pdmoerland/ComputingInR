@@ -1,8 +1,8 @@
 ---
 title: "Computing in R: Day 2"
-subtitle: "AMC Graduate School"
+subtitle: "Amsterdam UMC - AMC Graduate School"
 author: "Perry Moerland"
-date: "2019-03-26"
+date: "2019-09-17"
 output:
   xaringan::moon_reader:
     self_contained: TRUE
