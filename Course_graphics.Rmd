@@ -2,7 +2,7 @@
 title: "Computing in R"
 subtitle: "Amsterdam UMC Doctoral School"
 author: "Perry Moerland"
-date: "13-17 December 2021"
+date: "14-18 March 2021"
 output:
   xaringan::moon_reader:
     self_contained: TRUE
@@ -122,8 +122,8 @@ plot(x,x^3-13*x^2+39*x,
      xlab="time (hours)",
      ylab="temperature",
      cex.axis=1.5,cex.lab=1.5)
-{{points(2,34,col="red",pch=16,
-       cex=2)}}
+points(2,34,col="red",pch=16,
+         cex=2)
 ```
 ]
 
@@ -164,8 +164,8 @@ plot(x,x^3-13*x^2+39*x,
 points(2,34,col="red",pch=16,
        cex=2)
 arrows(4,50,2.2,34.5)
-{{text(4.15,50,"local maximum",
-     adj=0,col="blue",cex=1.5)}}
+text(4.15,50,"local maximum",
+     adj=0,col="blue",cex=1.5)
 ```
 ]
 
@@ -189,8 +189,8 @@ points(2,34,col="red",pch=16,
 arrows(4,50,2.2,34.5)
 text(4.15,50,"local maximum",
      adj=0,col="blue",cex=1.5)
-{{lines(x,30-50*sin(x/2),
-      col="blue")}}
+lines(x,30-50*sin(x/2),
+      col="blue")
 ```
 ]
 
@@ -216,13 +216,12 @@ text(4.15,50,"local maximum",
      adj=0,col="blue",cex=1.5)
 lines(x,30-50*sin(x/2),
       col="blue")
-{{legend(x=0,y=80,
+legend(x=0,y=80,
        legend=c("Sahara",
                 "Gobi"),
        lty=1,
        col=c("black","blue"),
        cex=1.5)
-}}
 ```
 ]
 
