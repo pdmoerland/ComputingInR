@@ -1,8 +1,8 @@
 ---
-title: "Computing in R: Day 2"
-subtitle: "Amsterdam UMC - AMC Graduate School"
+title: "Computing in R"
+subtitle: "Amsterdam UMC Doctoral School"
 author: "Perry Moerland"
-date: "2019-09-17"
+date: "13-17 December 2021"
 output:
   xaringan::moon_reader:
     self_contained: TRUE
@@ -73,8 +73,8 @@ plot(x,x^3-13*x^2+39*x,type="l",xlab="time (hours)",
 ```
 ---
 # Basic plot (V)
-- Change the plot symbol used from the default dot using the argument _pch_ (see [reference card](http://wiki.bioinformaticslaboratory.nl/twikidata/pub/Education/ComputinginR_new/R-refcard-v2.pdf))
-- Change the colour via the argument _col_. By name: see `colors()` for the 657 [options](http://research.stowers.org/mcm/efg/R/Color/Chart/). By number: see `palette()`
+- Change the plot symbol used from the default dot using the argument _pch_ (see [reference card](http://bioinformaticslaboratory.eu/wp-content/uploads/gs-computing-in-r/R-refcard-v2.pdf))
+- Change the colour via the argument _col_. By name: see `colors()` for the 657 [options](https://rstudio-pubs-static.s3.amazonaws.com/3486_79191ad32cf74955b4502b8530aad627.html). By number: see `palette()`
 
 ```{r poly5, fig.height=3, dev='svg',echo=2}
 par(mar = c(4, 5, 2, .1))
